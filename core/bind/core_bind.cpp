@@ -2098,10 +2098,11 @@ void _Thread::_start_func(void *ud) {
 	memdelete(tud);
 	Callable::CallError ce;
 	const Variant *arg[1] = { &t->userdata };
+	int argc = arg[0]->get_type() != 0;
 
 	Thread::set_name(t->target_method);
 
-	t->ret = t->target_instance->call(t->target_method, arg, 1, ce);
+	t->ret = t->target_instance->call(t->target_method, arg, argc, ce);
 	if (ce.error != Callable::CallError::CALL_OK) {
 
 		String reason;
